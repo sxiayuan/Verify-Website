@@ -1,0 +1,170 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body
+{
+    font-family: 'Inter', system-ui, sans-serif;
+
+}
+
+.navbar 
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.navbar-logo {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #b777b3;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-right: 30px; 
+}
+.navbar-container {
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 2rem;
+    align-items: baseline;
+    margin-left: 40px
+
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
+}
+
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+.navbar-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.navbar-menu li a:hover {
+    color: #f0abf0;
+}
+
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left; /* Changed from center to left */
+    padding: 0 2rem;
+    padding-left: 5rem; /* Add more left padding */
+}
+
+.hero-title {    align-items: flex-start; /* Changed from center to flex-start */
+
+    font-size: 6rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #d9034b 0%, #f06292 100%);
+    z-index: 1; /* Ensure text is above highlight */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    position: relative; 
+    animation: fadeInUp 1s ease;
+}
+
+
+.hero-description{
+    font-family: SF Pro Display, sans-serif;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    line-height: 1.6;
+    position: relative; 
+}
+
+.hero-title:hover {
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
+.hero-button-mac {
+    padding-left: 300px;
+    display: inline-flex; /* Change from flex to inline-flex */
+    align-items: center; /* Remove flex-wrap and justify-content */
+    gap: 0.5rem;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #d9034b 0%, #f06292 100%);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(217, 3, 75, 0.3);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    position: relative; /* Add this for JavaScript animations */
+}
+
+
+.hero-button-windows {
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 16px 32px;
+    background: transparent;
+    color: #d4547e;
+    border: 2px solid #f4d8e1;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: none;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    position: relative;
+}
+
+/* Button container */
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
