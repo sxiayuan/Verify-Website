@@ -59,15 +59,3 @@ links
 - github
 
 
-hero-title::after {
-    content: '|';
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 6rem;
-    color: #333;
-    font-weight: 100;
-    z-index: 1;
-    animation: cursorMove 2s ease 0.5s forwards;
-    line-height: 1.1;
-}
