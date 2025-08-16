@@ -1,4 +1,97 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Video autoplay handling
+    const heroVideo = document.querySelector('.hero-background-video');
+    
+    if (heroVideo) {
+        console.log('Video element found:', heroVideo);
+        
+        // Ensure video properties for autoplay
+        heroVideo.muted = true;
+        heroVideo.volume = 0;
+        heroVideo.autoplay = true;
+        heroVideo.playsInline = true;
+        heroVideo.loop = false; // Explicitly disable looping
+        
+        // Force autoplay attempts
+        let hasStartedPlaying = false;
+        let videoHasEnded = false;
+        
+        const forcePlay = async () => {
+            if (hasStartedPlaying || videoHasEnded) return; // Prevent multiple play attempts
+            
+            try {
+                await heroVideo.play();
+                hasStartedPlaying = true;
+                console.log('Video is playing automatically');
+            } catch (error) {
+                console.log('Autoplay attempt failed:', error);
+            }
+        };
+        
+        // Event listeners
+        heroVideo.addEventListener('loadeddata', function() {
+            console.log('Video data loaded');
+            if (!hasStartedPlaying) forcePlay();
+        });
+        
+        heroVideo.addEventListener('canplay', function() {
+            console.log('Video can play');
+            if (!hasStartedPlaying) forcePlay();
+        });
+        
+        // Freeze video at last frame when it ends
+        heroVideo.addEventListener('ended', function() {
+            console.log('Video ended, freezing at last frame');
+            videoHasEnded = true;
+            // Prevent any potential restart
+            this.pause();
+            // Keep the video at the last frame
+            this.currentTime = this.duration;
+            // Ensure it stays paused
+            this.loop = false;
+            // Remove autoplay to prevent browser from restarting
+            this.autoplay = false;
+        });
+        
+        // Additional safety: prevent video from restarting
+        heroVideo.addEventListener('timeupdate', function() {
+            // If video somehow reaches the end and tries to restart, stop it
+            if (this.currentTime >= this.duration && this.duration > 0 && !videoHasEnded) {
+                console.log('Video naturally ending, triggering end state');
+                videoHasEnded = true;
+                this.pause();
+                this.currentTime = this.duration;
+                this.loop = false;
+                this.autoplay = false;
+            }
+        });
+        
+        // Block any attempt to restart the video after it's ended
+        heroVideo.addEventListener('play', function() {
+            if (videoHasEnded) {
+                console.log('Blocking video restart attempt');
+                this.pause();
+                this.currentTime = this.duration;
+                return false;
+            }
+            console.log('Video started playing');
+        });
+        
+        heroVideo.addEventListener('error', function(e) {
+            console.log('Video error:', e);
+        });
+        
+        // Single autoplay attempt after setup
+        setTimeout(() => {
+            if (heroVideo.readyState >= 2) {
+                forcePlay();
+            }
+        }, 100);
+        
+    } else {
+        console.log('Video element not found');
+    }
+    
     const heroTitle = document.querySelector('.hero-title');
     
     // Create highlight background
@@ -223,3 +316,4 @@ const heroButtons = document.querySelectorAll('.hero-button-mac, .hero-button-wi
     });
 
 });
+
