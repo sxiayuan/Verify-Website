@@ -64,5 +64,3 @@ By integrating hotkey-triggered automation with the ChatGPT desktop app, Verify 
 
 
 
-
-

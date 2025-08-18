@@ -235,32 +235,76 @@ cursor.style.left = (easeOut * maxWidth) + '%';
         this.style.transform = 'scale(1) translateY(0)';
     });
     
-    // Button animations
+    // Button animations - Scroll-triggered
     const heroDescription = document.querySelector('.hero-description');
 const heroButtons = document.querySelectorAll('.hero-button-mac, .hero-button-windows');    
-    // Animate description and buttons after title
+const navbarButton = document.querySelector('.navbar-cta-button');
+    
+    // Scroll-triggered animation observer
+    const observerOptions = {
+        threshold: 0.3, // Trigger when 30% of the element is visible
+        rootMargin: '0px 0px -50px 0px' // Trigger slightly before element fully enters viewport
+    };
+    
+    const buttonObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                
+                if (target.classList.contains('hero-description')) {
+                    // Animate description
+                    target.style.opacity = '1';
+                    target.style.transform = 'translateY(0)';
+                    buttonObserver.unobserve(target);
+                } else if (target.classList.contains('hero-buttons')) {
+                    // Animate buttons container
+                    animateHeroButtons();
+                    buttonObserver.unobserve(target); // Only animate once
+                }
+            }
+        });
+    }, observerOptions);
+    
+    // Observe the description and buttons container
+    if (heroDescription) {
+        buttonObserver.observe(heroDescription);
+    }
+    const buttonsContainer = document.querySelector('.hero-buttons');
+    if (buttonsContainer) {
+        buttonObserver.observe(buttonsContainer);
+    }
+    
+    function animateHeroButtons() {
+        // Animate buttons with staggered entrance
+        heroButtons.forEach((button, index) => {
+            setTimeout(() => {
+                if (button.classList.contains('hero-button-mac')) {
+                    button.classList.add('animate-glow');
+                } else if (button.classList.contains('hero-button-windows')) {
+                    button.classList.add('animate-border');
+                }
+            }, index * 200); // 200ms stagger between buttons
+        });
+    }
+    
+    // Initial navbar button animation (immediate on page load)
     setTimeout(() => {
-        // Fade in description
-        heroDescription.style.transition = 'all 0.8s ease';
-        heroDescription.style.opacity = '1';
-        heroDescription.style.transform = 'translateY(0)';
-        
-        // Fade in buttons with stagger
-        setTimeout(() => {
-            heroButtons.forEach((button, index) => {
-                setTimeout(() => {
-                    button.style.transition = 'all 0.6s ease';
-                    button.style.opacity = '1';
-                    button.style.transform = 'translateY(0)';
-                }, index * 150);
-            });
-        }, 300);
+        if (navbarButton) {
+            navbarButton.style.transition = 'all 0.6s ease';
+            navbarButton.style.opacity = '1';
+            navbarButton.style.transform = 'translateY(0)';
+        }
     }, 1200);
     
    // ...existing code...
 
     // Button hover effects
-    heroButtons.forEach(button => {
+    const allButtons = [...heroButtons];
+    if (navbarButton) {
+        allButtons.push(navbarButton);
+    }
+    
+    allButtons.forEach(button => {
         // Create shine effect
         const shine = document.createElement('div');
         shine.style.cssText = `
@@ -292,6 +336,10 @@ const heroButtons = document.querySelectorAll('.hero-button-mac, .hero-button-wi
                 this.style.background = 'linear-gradient(135deg, #f8bbd9 0%, #f4a6cd 100%)'; // Lighter pink gradient
                 this.style.color = 'white';
             }
+            // Navbar button hover
+            else if (this.classList.contains('navbar-cta-button')) {
+                this.style.background = 'linear-gradient(135deg, #e91e63 0%, #f06292 100%) !important';
+            }
         });
         
         button.addEventListener('mouseleave', function() {
@@ -308,6 +356,11 @@ const heroButtons = document.querySelectorAll('.hero-button-mac, .hero-button-wi
                 this.style.color = '#d9034b';
                 this.style.boxShadow = 'none';
             }
+            // Navbar button leave
+            else if (this.classList.contains('navbar-cta-button')) {
+                this.style.background = 'linear-gradient(135deg, #d9034b 0%, #f06292 100%) !important';
+                this.style.boxShadow = '0 4px 15px rgba(217, 3, 75, 0.3) !important';
+            }
             
             // Reset shine
             shine.style.transition = 'none';
@@ -315,5 +368,82 @@ const heroButtons = document.querySelectorAll('.hero-button-mac, .hero-button-wi
         });
     });
 
+    // FAQ functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    console.log('FAQ items found:', faqItems.length); // Debug log
+    
+    if (faqItems.length > 0) {
+        faqItems.forEach((item, index) => {
+            const question = item.querySelector('.faq-question');
+            console.log(`FAQ item ${index}:`, question); // Debug log
+            
+            if (question) {
+                question.addEventListener('click', () => {
+                    console.log('FAQ clicked:', item); // Debug log
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all other FAQ items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    if (isActive) {
+                        item.classList.remove('active');
+                        console.log('FAQ closed'); // Debug log
+                    } else {
+                        item.classList.add('active');
+                        console.log('FAQ opened'); // Debug log
+                    }
+                });
+            }
+        });
+    } else {
+        console.log('No FAQ items found - FAQ functionality may not work');
+    }
+
 });
+
+// Additional backup FAQ initialization - runs when everything is loaded
+window.addEventListener('load', function() {
+    console.log('Page fully loaded, initializing FAQ backup...');
+    initializeFAQ();
+});
+
+function initializeFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    console.log('Backup FAQ initialization - items found:', faqItems.length);
+    
+    faqItems.forEach((item, index) => {
+        const question = item.querySelector('.faq-question');
+        
+        if (question) {
+            // Remove any existing listeners to avoid duplicates
+            question.removeEventListener('click', handleFAQClick);
+            question.addEventListener('click', handleFAQClick);
+        }
+    });
+}
+
+function handleFAQClick(event) {
+    const item = event.currentTarget.closest('.faq-item');
+    const isActive = item.classList.contains('active');
+    console.log('FAQ click handled:', item, 'isActive:', isActive);
+    
+    // Close all other FAQ items
+    document.querySelectorAll('.faq-item').forEach(otherItem => {
+        if (otherItem !== item) {
+            otherItem.classList.remove('active');
+        }
+    });
+    
+    // Toggle current item
+    if (isActive) {
+        item.classList.remove('active');
+    } else {
+        item.classList.add('active');
+    }
+}
 
