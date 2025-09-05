@@ -62,5 +62,3 @@ Offline Mode Reminder: Notify users if ChatGPT is offline or disconnected.
 Value Proposition
 By integrating hotkey-triggered automation with the ChatGPT desktop app, Verify eliminates unnecessary clicks and context switching. This enables researchers, students, journalists, and casual users to fact-check instantly, without breaking their reading or workflow.
 
-
-
