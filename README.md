@@ -18,3 +18,8 @@ Despite all the struggles, I'm satisfied with my end product and have grew a lot
 
 
 
+[![Athena Award Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Faward.athena.hackclub.com%2Fapi%2Fbadge)](https://award.athena.hackclub.com?utm_source=readme)
+
+
+My project is a website for a yet in progress app called Verify. Verify, inspired by chatgpt and zerogpt, is an app that uses the chatgpt desktop app to verify any highlighted text by your cursor. The website gives a detailed description of the app, it's features and pricing. 
+I made the app with VSCode, hosted on github pages. I used coding languages HTML for structure, CSS for styling and transition and javascript for transitions and interactivity.
