@@ -1239,3 +1239,52 @@ body
     }
 }
 
+
+.about-section{
+    margin: 20px 30px;
+}
+
+.about-desc{
+    color:black; 
+    margin-bottom: 20px;
+
+}
+
+.about-team{
+    color:#9e4361;
+        margin-bottom: 20px;
+
+
+}
+
+.about-values{
+    color:#3e1623; 
+}
+
+.career-desc{
+   margin: 2rem 0;
+  padding: 1rem;
+  display: block;
+}
+
+.contact-desc{
+       margin: 2rem 0;
+  padding: 1rem;
+  display: block;
+}
+.help-desc{
+    margin: 2rem 0;
+  padding: 1rem;
+  display: block;
+}
+
+.pricing-desc{
+    margin: 2rem 0;
+  padding: 1rem;
+  display: block;
+}
+
+.privacy-desc{
+margin: 2rem 0;
+  padding: 4rem;
+}
